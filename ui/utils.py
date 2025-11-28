@@ -34,13 +34,13 @@ def generate_shap_summary(shap_values, features_df, top_n=3):
         summary += "此預測結果主要基於以下關鍵證據：\n\n"
 
         if positive_contributors:
-            summary += "**主要推力 (判斷為攻擊):**\n"
+            summary += "**判斷為「攻擊」的主要依據:**\n"
             for item in positive_contributors:
                 summary += f"- **{item['feature']}** 的值為 **{item['value']:.2f}**，顯著地增加了攻擊的可能性。\n"
             summary += "\n"
 
         if negative_contributors:
-            summary += "**反向拉力 (傾向判斷為正常):**\n"
+            summary += "**判斷為「正常」的主要依據:**\n"
             for item in negative_contributors:
                 summary += f"- **{item['feature']}** 的值為 **{item['value']:.2f}**，降低了攻擊的可能性。\n"
 
