@@ -1,0 +1,13 @@
+streamlit
+pandas
+numpy
+scikit-learn
+joblib
+requests
+matplotlib
+seaborn
+sklearn-genetic-opt
+shap
+# Optional:
+# xgboost
+# lightgbm
