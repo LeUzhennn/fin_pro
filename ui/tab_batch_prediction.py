@@ -188,7 +188,13 @@ def display_batch_prediction_tab():
                             if len(shap_values_for_class) == len(features_for_plot) + 1:
                                 shap_values_for_class = shap_values_for_class[:-1]
 
-                            summary_text = generate_shap_summary(shap_values_for_class, single_instance)
+                            summary_text = generate_shap_summary(
+                                shap_values_for_class, 
+                                single_instance,
+                                single_prediction_label,
+                                le,
+                                shap_base_value
+                            )
                             st.markdown(summary_text)
                         except KeyError:
                             st.error(f"發生錯誤：無法在已處理的資料中找到索引 {selected_index}。")

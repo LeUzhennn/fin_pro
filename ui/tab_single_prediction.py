@@ -91,7 +91,13 @@ def display_single_prediction_tab():
                     shap_values_for_class = shap_values_for_class[:-1]
                 # --- END of the new, safe logic ---
 
-                summary_text = generate_shap_summary(shap_values_for_class, final_input_for_model)
+                summary_text = generate_shap_summary(
+                    shap_values_for_class, 
+                    final_input_for_model, 
+                    predicted_label, 
+                    le,
+                    shap_base_value
+                )
                 st.markdown(summary_text)
             except Exception as e:
                 st.warning(f"無法產生 SHAP 分析：{e}")
