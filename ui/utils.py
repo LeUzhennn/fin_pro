@@ -1,5 +1,7 @@
 import streamlit as st
 import numpy as np
+import requests
+import io
 
 def generate_shap_summary(shap_values, features_df, predicted_label, le, shap_base_value, top_n=3):
     """
@@ -77,3 +79,36 @@ def generate_shap_summary(shap_values, features_df, predicted_label, le, shap_ba
         return summary
     except Exception as e:
         return f"#### 📖 簡易分析摘要\n無法產生分析摘要，錯誤：`{e}`\n"
+
+
+def download_file_from_gdrive(url):
+    """
+    Downloads a file from a Google Drive URL, handling the large file confirmation prompt.
+    Returns the file content in bytes.
+    """
+    session = requests.Session()
+    response = session.get(url, stream=True)
+
+    token = None
+    for key, value in response.cookies.items():
+        if key.startswith('download_warning'):
+            token = value
+            break
+
+    if token:
+        url_with_confirm = url + '&confirm=' + token
+        response = session.get(url_with_confirm, stream=True)
+
+    if 'Content-Disposition' not in response.headers:
+        error_html = response.text
+        if 'Google Drive' in error_html and 'virus scan' in error_html:
+            raise Exception("下載失敗：無法自動繞過 Google Drive 的病毒掃描警告。")
+        else:
+            raise Exception("下載失敗：回應不是一個檔案，而是一個 HTML 頁面。請檢查 URL 和共用權限。")
+
+    file_buffer = io.BytesIO()
+    for chunk in response.iter_content(chunk_size=32768):
+        if chunk:
+            file_buffer.write(chunk)
+
+    return file_buffer.getvalue()

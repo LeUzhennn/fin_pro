@@ -4,12 +4,14 @@ import requests
 import joblib
 import shap
 import pandas as pd
+import traceback
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.model_selection import train_test_split
 
 from src.data_loader import load_data, clean_data
 from src.feature_selector import run_genetic_selection
 from src.model_trainer import train_and_evaluate
+from ui.utils import download_file_from_gdrive
 
 def display_sidebar():
     """
@@ -24,12 +26,12 @@ def display_sidebar():
             model_url = st.text_input("請輸入模型檔案的 Raw URL", help="請確保提供的是指向模型檔案本身的 Raw 連結。")
             if st.button("從 URL 載入模型"):
                 if model_url:
-                    with st.spinner("正在從 URL 下載並載入模型..."):
+                    with st.spinner("正在從 URL 下載並載入模型... (大檔案可能需要數分鐘)"):
                         try:
-                            response = requests.get(model_url)
-                            response.raise_for_status()
+                            # 使用新的下載函數
+                            file_content = download_file_from_gdrive(model_url)
                             
-                            model_file = io.BytesIO(response.content)
+                            model_file = io.BytesIO(file_content)
                             loaded_data = joblib.load(model_file)
                             
                             st.session_state['trained_model'] = loaded_data['model']
@@ -46,7 +48,8 @@ def display_sidebar():
 
                             st.success("模型從 URL 載入成功！")
                         except Exception as e:
-                            st.error(f"從 URL 載入模型失敗：{e}")
+                            st.error("從 URL 載入模型失敗，詳細錯誤資訊如下：")
+                            st.code(f"{e}\n\n{traceback.format_exc()}")
                 else:
                     st.warning("請先輸入模型檔案的 URL。")
 
