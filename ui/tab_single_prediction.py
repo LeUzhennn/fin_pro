@@ -8,13 +8,25 @@ from src.llm_analyzer import get_threat_explanation
 # We need the summary function
 from ui.utils import generate_shap_summary
 
-@st.cache_data
+from config import CacheConfig, DEFAULT_DATA_FILE
+from src.logger import get_logger
+
+logger = get_logger(__name__)
+
+@st.cache_data(ttl=CacheConfig.CACHE_TTL, max_entries=CacheConfig.MAX_CACHE_ENTRIES)
 def get_samples():
-    """Loads one 'Benign' and one 'Infilteration' sample from the dataset."""
+    """
+    從資料集載入範例資料（一筆 Benign 和一筆 Infilteration）。
+    
+    使用快取機制避免重複載入，快取會在 1 小時後過期。
+    
+    Returns:
+        dict: 包含範例資料的字典
+    """
     try:
-        # Read the full dataset to ensure we find the samples.
-        # This is cached, so it only runs on the first load.
-        df = pd.read_csv("data/03-01-2018.csv", low_memory=False)
+        # 使用配置檔案中的路徑
+        df = pd.read_csv(str(DEFAULT_DATA_FILE), low_memory=False)
+        logger.info(f"載入範例資料: {df.shape[0]} 筆")
         df.columns = df.columns.str.strip()
         df['Label'] = df['Label'].str.strip()
 

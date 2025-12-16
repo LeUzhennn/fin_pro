@@ -7,6 +7,12 @@ from ui.tab_dashboard import display_dashboard_tab
 from ui.tab_single_prediction import display_single_prediction_tab
 from ui.tab_batch_prediction import display_batch_prediction_tab
 
+# Import configuration
+from config import UIConfig
+from src.logger import get_logger
+
+logger = get_logger(__name__)
+
 def main() -> None:
     """
     Main function to run the Streamlit application.
@@ -16,12 +22,14 @@ def main() -> None:
     # ==============================================================================
 
     st.set_page_config(
-        page_title="入侵偵測互動式分析系統",
-        page_icon="🛡️",
-        layout="wide"
+        page_title=UIConfig.PAGE_TITLE,
+        page_icon=UIConfig.PAGE_ICON,
+        layout=UIConfig.LAYOUT
     )
+    
+    logger.info("應用程式啟動")
 
-    st.title("🛡️ 入侵偵測互動式分析系統")
+    st.title(f"{UIConfig.PAGE_ICON} {UIConfig.PAGE_TITLE}")
 
     # ==============================================================================
     # Sidebar

@@ -4,9 +4,14 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 
-# Define the path to the directory where the vector store will be saved
-PERSIST_DIRECTORY = "db"
-PDF_DIRECTORY = "./" # Assuming PDFs are in the root directory
+from config import DB_DIR, APIConfig
+from src.logger import get_logger
+
+logger = get_logger(__name__)
+
+# 使用配置檔案中的路徑
+PERSIST_DIRECTORY = str(DB_DIR)
+PDF_DIRECTORY = APIConfig.PDF_DIRECTORY
 
 def build_knowledge_base():
     """
@@ -33,13 +38,18 @@ def build_knowledge_base():
         return
 
     # Split documents into chunks
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=APIConfig.CHUNK_SIZE,
+        chunk_overlap=APIConfig.CHUNK_OVERLAP
+    )
     texts = text_splitter.split_documents(documents)
+    logger.info(f"將 {len(documents)} 份文件分割成 {len(texts)} 個片段")
     print(f"Split {len(documents)} documents into {len(texts)} chunks.")
 
     # Create embeddings using a HuggingFace model
+    logger.info("建立嵌入向量...")
     print("Creating embeddings (this may take a while)...")
-    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    embeddings = HuggingFaceEmbeddings(model_name=APIConfig.EMBEDDING_MODEL_NAME)
 
     # Create and persist the Chroma vector store
     print(f"Creating Chroma vector store in {PERSIST_DIRECTORY}...")

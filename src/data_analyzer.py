@@ -4,10 +4,14 @@ import seaborn as sns
 import os
 import numpy as np
 
-# Configuration
-DATA_FILE = "data/03-01-2018.csv"
-PLOTS_DIR = "plots"
-SELECTED_FEATURES = ['Flow Duration', 'Flow IAT Mean', 'Tot Fwd Pkts'] # Features identified from head command
+from config import DEFAULT_DATA_FILE, PLOTS_DIR, DataConfig
+from src.logger import get_logger
+
+logger = get_logger(__name__)
+
+# 從配置取得設定
+DATA_FILE = str(DEFAULT_DATA_FILE)
+SELECTED_FEATURES = DataConfig.SELECTED_FEATURES_FOR_VISUALIZATION
 
 def clean_and_load_data(file_path):
     """Loads and cleans the dataset."""
@@ -41,8 +45,10 @@ def visualize_features(df, features, plots_dir):
         os.makedirs(plots_dir)
 
     labels = df['Label'].unique()
-    if len(labels) > 5: # Limit labels to avoid cluttering plots if too many attack types
-        print(f"Warning: Too many unique labels ({len(labels)}). Visualizing top 5 and 'Benign'.")
+    max_labels = DataConfig.MAX_LABELS_FOR_PLOT
+    if len(labels) > max_labels:
+        logger.warning(f"標籤過多 ({len(labels)})，僅視覺化前 {max_labels-1} 個和 'Benign'")
+        print(f"Warning: Too many unique labels ({len(labels)}). Visualizing top {max_labels-1} and 'Benign'.")
         top_labels = df['Label'].value_counts().nlargest(4).index.tolist()
         if 'Benign' not in top_labels:
             top_labels.append('Benign')

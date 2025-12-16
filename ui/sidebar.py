@@ -12,6 +12,10 @@ from src.data_loader import load_data, clean_data
 from src.feature_selector import run_genetic_selection
 from src.model_trainer import train_and_evaluate
 from ui.utils import download_file_from_gdrive
+from config import DEFAULT_DATA_FILE, ModelConfig
+from src.logger import get_logger
+
+logger = get_logger(__name__)
 
 def display_sidebar():
     """
@@ -87,7 +91,8 @@ def display_sidebar():
         if not st.session_state.get('model_loaded', False):
             st.header("本機訓練流程")
             st.info("偵測到無預載模型，您可以在此執行完整的資料讀取與訓練流程。")
-            DATA_PATH = "data/03-01-2018.csv"
+            DATA_PATH = str(DEFAULT_DATA_FILE)
+            logger.info(f"使用資料路徑: {DATA_PATH}")
             
             # Use session state to cache the loaded and cleaned dataframe
             if 'df_cleaned' not in st.session_state:
@@ -142,8 +147,12 @@ def display_sidebar():
                             X_selected = st.session_state['X_scaled'][st.session_state['selected_features']]
                             y_encoded = st.session_state['y_encoded']
                             le = st.session_state['le']
+                            logger.info(f"分割資料集: test_size={ModelConfig.TEST_SIZE}")
                             X_train, X_test, y_train, y_test = train_test_split(
-                                X_selected, y_encoded, test_size=0.2, random_state=42, stratify=y_encoded
+                                X_selected, y_encoded,
+                                test_size=ModelConfig.TEST_SIZE,
+                                random_state=ModelConfig.TRAIN_TEST_RANDOM_STATE,
+                                stratify=y_encoded
                             )
                         st.success("資料分割完成！")
 

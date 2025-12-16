@@ -2,11 +2,38 @@ import streamlit as st
 import numpy as np
 import requests
 import io
+from typing import Optional
 
-def generate_shap_summary(shap_values, features_df, predicted_label, le, shap_base_value, top_n=3):
+from config import UIConfig
+from src.logger import get_logger
+
+logger = get_logger(__name__)
+
+def generate_shap_summary(
+    shap_values,
+    features_df,
+    predicted_label,
+    le,
+    shap_base_value,
+    top_n: Optional[int] = None
+):
     """
     根據 SHAP 值生成完全透明的自然語言摘要，包含影響力分數和最終判斷公式。
+    
+    Args:
+        shap_values: SHAP 值陣列
+        features_df: 特徵 DataFrame
+        predicted_label: 預測的標籤
+        le: LabelEncoder 實例
+        shap_base_value: SHAP 基礎值
+        top_n: 顯示前 N 個特徵，預設使用配置檔案設定
+        
+    Returns:
+        str: 格式化的 SHAP 分析摘要
     """
+    if top_n is None:
+        top_n = UIConfig.SHAP_TOP_N_FEATURES
+    
     try:
         # 確定 "另一方" 的標籤
         all_classes = le.classes_.tolist()

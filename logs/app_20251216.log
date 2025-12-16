@@ -1,0 +1,47 @@
+2025-12-16 05:50:13 - test_module - INFO - 這是 INFO 訊息
+2025-12-16 05:50:13 - test_module - WARNING - 這是 WARNING 訊息
+2025-12-16 05:50:13 - test_module - ERROR - 這是 ERROR 訊息
+2025-12-16 05:50:13 - test_module - CRITICAL - 這是 CRITICAL 訊息
+2025-12-16 05:50:13 - test_module - ERROR - 測試例外處理: 這是一個測試例外
+Traceback (most recent call last):
+  File "/workspaces/fin_pro_1128/src/logger.py", line 217, in <module>
+    raise ValueError("這是一個測試例外")
+ValueError: 這是一個測試例外
+2025-12-16 05:50:13 - test_module - INFO - 效能: 測試操作 耗時 0.10 秒
+2025-12-16 05:55:44 - __main__ - INFO - 應用程式啟動
+2025-12-16 05:55:44 - ui.sidebar - INFO - 使用資料路徑: /workspaces/fin_pro_1128/data/03-01-2018.csv
+2025-12-16 05:56:20 - __main__ - INFO - 應用程式啟動
+2025-12-16 05:56:24 - ui.tab_single_prediction - INFO - 載入範例資料: 300608 筆
+2025-12-16 05:56:59 - __main__ - INFO - 應用程式啟動
+2025-12-16 05:57:03 - __main__ - INFO - 應用程式啟動
+2025-12-16 05:57:14 - __main__ - INFO - 應用程式啟動
+2025-12-16 05:57:24 - __main__ - INFO - 應用程式啟動
+2025-12-16 05:57:28 - __main__ - INFO - 應用程式啟動
+2025-12-16 05:58:07 - __main__ - INFO - 應用程式啟動
+2025-12-16 05:58:17 - __main__ - INFO - 應用程式啟動
+2025-12-16 05:58:45 - __main__ - INFO - 應用程式啟動
+2025-12-16 06:01:14 - src.llm_analyzer - INFO - 開始分析威脅: DDoS
+2025-12-16 06:01:14 - src.llm_analyzer - INFO - 威脅分析完成，報告長度: 717 字元
+2025-12-16 06:01:34 - src.llm_analyzer - INFO - 開始分析威脅: PortScan
+2025-12-16 06:01:34 - src.llm_analyzer - INFO - 威脅分析完成，報告長度: 566 字元
+2025-12-16 06:02:38 - src.llm_analyzer - INFO - 開始分析威脅: DDoS
+2025-12-16 06:02:38 - src.llm_analyzer - INFO - 威脅分析完成，報告長度: 501 字元
+2025-12-16 06:02:38 - src.llm_analyzer - INFO - 開始分析威脅: PortScan
+2025-12-16 06:02:38 - src.llm_analyzer - INFO - 威脅分析完成，報告長度: 436 字元
+2025-12-16 06:02:38 - src.llm_analyzer - INFO - 開始分析威脅: Infilteration
+2025-12-16 06:02:38 - src.llm_analyzer - INFO - 威脅分析完成，報告長度: 440 字元
+2025-12-16 06:02:38 - src.llm_analyzer - INFO - 開始分析威脅: Bot
+2025-12-16 06:02:38 - src.llm_analyzer - INFO - 威脅分析完成，報告長度: 425 字元
+2025-12-16 06:02:38 - src.llm_analyzer - INFO - 開始分析威脅: Web Attack
+2025-12-16 06:02:38 - src.llm_analyzer - INFO - 威脅分析完成，報告長度: 484 字元
+2025-12-16 06:02:38 - src.llm_analyzer - INFO - 開始分析威脅: Brute Force
+2025-12-16 06:02:38 - src.llm_analyzer - INFO - 威脅分析完成，報告長度: 423 字元
+2025-12-16 06:04:10 - __main__ - INFO - 應用程式啟動
+2025-12-16 06:04:10 - ui.sidebar - INFO - 使用資料路徑: /workspaces/fin_pro_1128/data/03-01-2018.csv
+2025-12-16 06:04:53 - __main__ - INFO - 應用程式啟動
+2025-12-16 06:04:57 - ui.tab_single_prediction - INFO - 載入範例資料: 300608 筆
+2025-12-16 06:05:12 - __main__ - INFO - 應用程式啟動
+2025-12-16 06:05:15 - __main__ - INFO - 應用程式啟動
+2025-12-16 06:05:24 - __main__ - INFO - 應用程式啟動
+2025-12-16 06:05:25 - src.llm_analyzer - INFO - 開始分析威脅: Infilteration
+2025-12-16 06:05:25 - src.llm_analyzer - INFO - 威脅分析完成，報告長度: 670 字元

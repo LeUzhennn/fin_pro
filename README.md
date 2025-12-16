@@ -1,8 +1,19 @@
 # 🛡️ 入侵偵測互動式分析系統
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://your-streamlit-app-url.com)
+[![Code Quality](https://img.shields.io/badge/code%20quality-refactored-brightgreen)](REFACTORING_SUMMARY.md)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 
 這是一個基於 Streamlit 的互動式網頁應用，旨在分析網路入侵偵測資料。使用者可以透過簡單的網頁介面，進行資料探索、特徵篩選、模型訓練、即時預測，並透過 SHAP 可解釋性分析了解模型為何會做出特定判斷。
+
+> **🎉 最新更新 (2025-12-16)**: 已完成大規模程式碼重構！
+> - ✅ 新增統一的配置管理系統
+> - ✅ 實作完整的日誌記錄功能
+> - ✅ 優化記憶體管理和快取策略
+> - ✅ 修正 DEAP 重複註冊問題
+> - ✅ 消除程式碼重複，提升可維護性
+> 
+> 詳情請參閱 [重構總結文件](REFACTORING_SUMMARY.md) 和 [快速入門指南](QUICKSTART.md)
 
 ## ✨ 主要功能
 
@@ -48,22 +59,37 @@
 
 ```
 .
-├── 📄 app.py                # Streamlit 應用程式主檔案
-├── 📄 requirements.txt      # 專案依賴套件
+├── 📄 app.py                      # Streamlit 應用程式主檔案 ✏️
+├── 📄 config.py                   # 配置管理（新增）✨
+├── 📄 requirements.txt            # 專案依賴套件
+├── 📄 REFACTORING_SUMMARY.md      # 重構總結文件（新增）✨
+├── 📄 QUICKSTART.md               # 快速入門指南（新增）✨
 ├── 📁 .streamlit/
-│   └── 📄 config.toml       # Streamlit 設定檔 (例如：最大上傳大小)
+│   └── 📄 config.toml             # Streamlit 設定檔
 ├── 📁 data/
-│   └── 📄 03-01-2018.csv    # 範例資料集
+│   └── 📄 03-01-2018.csv          # 範例資料集
+├── 📁 logs/                       # 日誌目錄（自動建立）✨
+│   └── 📄 app_*.log
+├── 📁 models/                     # 模型目錄（自動建立）✨
 ├── 📁 src/
-│   ├── 📄 data_loader.py    # 資料讀取模組
-│   ├── 📄 feature_selector.py # 特徵選擇模組
-│   └── 📄 model_trainer.py  # 模型訓練模組
+│   ├── 📄 logger.py               # 日誌管理（新增）✨
+│   ├── 📄 data_preprocessor.py    # 資料預處理共用模組（新增）✨
+│   ├── 📄 data_loader.py          # 資料讀取模組 ✏️
+│   ├── 📄 feature_selector.py     # 特徵選擇模組 ✏️
+│   ├── 📄 model_trainer.py        # 模型訓練模組 ✏️
+│   ├── 📄 data_analyzer.py        # 資料分析模組 ✏️
+│   ├── 📄 build_knowledge_base.py # RAG 知識庫 ✏️
+│   └── 📄 llm_analyzer.py         # LLM 分析模組
 └── 📁 ui/
-    ├── 📄 sidebar.py        # 側邊欄介面
-    ├── 📄 tab_dashboard.py    # 儀表板分頁
-    ├── 📄 tab_single_prediction.py # 即時預測分頁
-    ├── 📄 tab_batch_prediction.py  # 批次分析分頁
-    └── 📄 utils.py          # 共用工具函式
+    ├── 📄 sidebar.py              # 側邊欄介面 ✏️
+    ├── 📄 tab_dashboard.py        # 儀表板分頁
+    ├── 📄 tab_single_prediction.py # 即時預測分頁 ✏️
+    ├── 📄 tab_batch_prediction.py # 批次分析分頁
+    └── 📄 utils.py                # 共用工具函式 ✏️
+
+圖示說明：
+✨ 新增檔案
+✏️ 已更新/重構的檔案
 ```
 
 ## 🛠️ 技術堆疊
